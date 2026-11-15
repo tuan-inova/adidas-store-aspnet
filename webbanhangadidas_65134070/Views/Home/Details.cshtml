@@ -1,0 +1,47 @@
+﻿@model webbanhangadidas_65134070.Models.San_Pham
+
+@{
+    ViewBag.Title = Model.TenSP;
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<div class="row mt-4">
+    <!-- ẢNH -->
+    <div class="col-md-6 text-center">
+        <img src="~/Images/@Model.HinhAnh"
+             class="img-fluid rounded"
+             style="max-height:420px;object-fit:contain"
+             alt="@Model.TenSP" />
+    </div>
+
+    <!-- THÔNG TIN -->
+    <div class="col-md-6">
+        <h3 class="fw-bold">@Model.TenSP</h3>
+
+        <h4 class="text-danger my-3">
+            @String.Format("{0:N0} đ", Model.Gia)
+        </h4>
+
+        @using (Html.BeginForm("Add", "Cart_65134070", new { id = Model.MaSP }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger btn-lg">🛒 Thêm vào giỏ hàng</button>
+        }
+
+        <hr />
+
+        <p>
+            <strong>Mô tả:</strong><br />
+            @Model.MoTa
+        </p>
+
+        <p>
+            <strong>Loại:</strong>
+            @Model.Loai_San_Pham.TenLoai
+        </p>
+
+        <a href="/" class="btn btn-secondary mt-3">
+            ← Quay lại trang chủ
+        </a>
+    </div>
+</div>

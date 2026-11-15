@@ -1,0 +1,62 @@
+﻿@using webbanhangadidas_65134070.Models
+@model IEnumerable<RevenueViewModel>
+
+@{
+    ViewBag.Title = "Thống kê doanh thu";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    // Khắc phục lỗi ArgumentNullException: Ép kiểu an toàn cho ViewBag
+    decimal tongDT = 0;
+    if (ViewBag.TongDoanhThu != null)
+    {
+        tongDT = (decimal)ViewBag.TongDoanhThu;
+    }
+}
+
+<h2 class="fw-bold mb-4">📊 THỐNG KÊ DOANH THU</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 bg-primary text-white">
+            <div class="card-body text-center">
+                <h5 class="fw-bold">TỔNG DOANH THU</h5>
+                @* Sử dụng biến tongDT đã kiểm tra null phía trên *@
+                <h3 class="fw-bold">@String.Format("{0:N0} đ", tongDT)</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h4 class="fw-bold mb-3">Doanh thu theo ngày</h4>
+        <table class="table table-bordered text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Ngày</th>
+                    <th>Doanh thu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var d in Model)
+                    {
+                        <tr>
+                            <td>@d.Ngay.ToString("dd/MM/yyyy")</td>
+                            <td class="text-danger fw-bold">
+                                @String.Format("{0:N0} đ", d.DoanhThu)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2" class="text-muted">Chưa có dữ liệu doanh thu hoàn tất.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

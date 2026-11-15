@@ -1,0 +1,28 @@
+# Visual Studio and generated build outputs
+.vs/
+[Bb]in/
+[Oo]bj/
+packages/
+TestResults/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Local database files and publish credentials
+*.mdf
+*.ldf
+*.bak
+*.pfx
+*.p12
+*.publishsettings
+*.pubxml.user
+Web.*.local.config
+.env
+.env.*
+!.env.example
+
+# Operating system files
+Thumbs.db
+Desktop.ini
+.DS_Store

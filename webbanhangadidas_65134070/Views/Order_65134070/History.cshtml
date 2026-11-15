@@ -1,0 +1,53 @@
+﻿@model IEnumerable<webbanhangadidas_65134070.Models.Don_Hang>
+
+@{
+    ViewBag.Title = "Lịch sử đơn hàng";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h3 class="mb-4">📦 LỊCH SỬ ĐƠN HÀNG</h3>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Bạn chưa có đơn hàng nào.
+    </div>
+}
+else
+{
+    <table class="table table-bordered text-center align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Mã đơn</th>
+                <th>Ngày đặt</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in Model)
+            {
+                <tr>
+                    <td>@d.MaDH</td>
+                    <td>
+                        @(d.NgayDat.HasValue
+                            ? d.NgayDat.Value.ToString("dd/MM/yyyy HH:mm")
+                            : "")
+                    </td>
+                    <td>
+                        @* CẬP NHẬT: Tự động đổi màu xanh khi Hoàn tất *@
+                        <span class="badge @(d.TrangThai == "Hoàn tất" ? "bg-success" : "bg-warning text-dark") px-3">
+                            @d.TrangThai
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/Order_65134070/Details/@d.MaDH"
+                           class="btn btn-sm btn-outline-dark">
+                            Xem chi tiết
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

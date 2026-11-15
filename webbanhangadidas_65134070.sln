@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36804.6 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webbanhangadidas_65134070", "webbanhangadidas_65134070\webbanhangadidas_65134070.csproj", "{229CF82E-DAC6-4A76-AB22-319718772527}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{229CF82E-DAC6-4A76-AB22-319718772527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{229CF82E-DAC6-4A76-AB22-319718772527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{229CF82E-DAC6-4A76-AB22-319718772527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{229CF82E-DAC6-4A76-AB22-319718772527}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C20EFA63-471A-4763-87C3-5E25CAD1EA53}
+	EndGlobalSection
+EndGlobal

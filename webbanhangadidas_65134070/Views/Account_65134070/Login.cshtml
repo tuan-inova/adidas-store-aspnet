@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h4 class="text-center mb-4">ĐĂNG NHẬP</h4>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger text-center">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <form method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email"
+                               class="form-control"
+                               placeholder="Nhập email"
+                               required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu</label>
+                        <input type="password" name="matKhau"
+                               class="form-control"
+                               placeholder="Nhập mật khẩu"
+                               required />
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-dark w-100">
+                        Đăng nhập
+                    </button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <span>Bạn chưa có tài khoản?</span>
+                    <a href="/Account_65134070/Register">
+                        Đăng ký
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

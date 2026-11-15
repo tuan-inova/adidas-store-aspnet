@@ -1,0 +1,92 @@
+﻿@model IEnumerable<webbanhangadidas_65134070.Models.RevenueByMonthViewModel>
+@{
+    ViewBag.Title = "Thống kê nâng cao";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+        <h5 class="fw-bold mb-3"><i class="bi bi-funnel"></i> Bộ lọc thống kê</h5>
+
+        <form action="@Url.Action("RevenueByMonth")" method="get" class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label class="small fw-bold">Lọc nhanh:</label>
+                <select name="filterType" class="form-select shadow-sm" onchange="this.form.submit()">
+                    <option value="">-- Chọn kiểu lọc --</option>
+                    <option value="10days" @(Request.QueryString["filterType"] == "10days" ? "selected" : "")>10 ngày gần đây</option>
+                    <option value="year" @(Request.QueryString["filterType"] == "year" ? "selected" : "")>Theo năm</option>
+                    <option value="custom" @(Request.QueryString["filterType"] == "custom" ? "selected" : "")>Khoảng ngày tùy chọn</option>
+                </select>
+            </div>
+
+            <div class="col-md-2" id="yearInput">
+                <label class="small fw-bold">Năm:</label>
+                <input type="number" name="searchYear" class="form-control shadow-sm" value="@ViewBag.SelectedYear" />
+            </div>
+
+            <div class="col-md-2">
+                <label class="small fw-bold">Từ ngày:</label>
+                <input type="date" name="fromDate" class="form-control shadow-sm" value="@Request.QueryString["fromDate"]" />
+            </div>
+            <div class="col-md-2">
+                <label class="small fw-bold">Đến ngày:</label>
+                <input type="date" name="toDate" class="form-control shadow-sm" value="@Request.QueryString["toDate"]" />
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-danger w-100 shadow-sm fw-bold">
+                    <i class="bi bi-search"></i> THỰC HIỆN LỌC
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-white">
+        <h5 class="fw-bold mb-0 text-primary">@ViewBag.Message</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tháng / Năm</th>
+                    <th>Số đơn</th>
+                    <th>Doanh thu</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>Tháng @item.Thang / @item.Nam</td>
+                            <td><span class="badge bg-info text-dark">@item.SoDonHang đơn</span></td>
+                            <td class="text-danger fw-bold">@item.TongDoanhThu.ToString("N0") đ</td>
+                            <td>
+                                @* CẬP NHẬT: Gửi kèm tham số lọc sang trang chi tiết *@
+                                <a href="@Url.Action("RevenueDetail", new {
+                                    month = item.Thang,
+                                    year = item.Nam,
+                                    filterType = Request.QueryString["filterType"],
+                                    fromDate = Request.QueryString["fromDate"],
+                                    toDate = Request.QueryString["toDate"]
+                                })" class="btn btn-sm btn-outline-dark rounded-pill px-3">
+                                    <i class="bi bi-list-check"></i> Xem chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="py-4 text-muted">Không có dữ liệu hiển thị.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

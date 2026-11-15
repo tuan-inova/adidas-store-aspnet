@@ -1,0 +1,32 @@
+﻿@model IEnumerable<webbanhangadidas_65134070.Models.Gio_Hang>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="text-center text-muted">
+        Giỏ hàng trống
+    </div>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        <div class="d-flex align-items-center mb-2">
+            <img src="~/Images/@item.San_Pham.HinhAnh"
+                 style="width:45px;height:45px;object-fit:contain"
+                 class="me-2 rounded" />
+
+            <div class="flex-grow-1">
+                <div class="fw-bold">@item.San_Pham.TenSP</div>
+                <small>
+                    SL: @item.SoLuong ×
+                    @String.Format("{0:N0} đ", item.San_Pham.Gia)
+                </small>
+            </div>
+        </div>
+    }
+
+    <hr />
+    <a href="/Cart_65134070" class="btn btn-sm btn-dark w-100">
+        Xem giỏ hàng
+    </a>
+}

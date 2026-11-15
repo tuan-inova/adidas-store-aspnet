@@ -1,0 +1,155 @@
+﻿@model IEnumerable<webbanhangadidas_65134070.Models.Gio_Hang>
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h3 class="mb-4">🛒 GIỎ HÀNG</h3>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["CartSuccess"] != null)
+{
+    <div class="alert alert-success">@TempData["CartSuccess"]</div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info shadow-sm p-4 text-center">
+        <p class="fs-5 mb-3">Giỏ hàng của bạn đang trống.</p>
+        <a href="/" class="btn btn-primary">Tiếp tục mua sắm</a>
+    </div>
+}
+else
+{
+    <div class="table-responsive shadow-sm">
+        <table class="table table-bordered align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width:90px">Ảnh</th>
+                    <th class="text-start">Sản phẩm</th>
+                    <th>Giá</th>
+                    <th style="width:160px">Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/Images/@item.San_Pham.HinhAnh"
+                                 class="img-thumbnail"
+                                 style="width:70px;height:70px;object-fit:cover" />
+                        </td>
+                        <td class="text-start">
+                            <strong>@item.San_Pham.TenSP</strong>
+                        </td>
+                        <td>
+                            @String.Format("{0:N0} đ", item.San_Pham.Gia)
+                        </td>
+                        <td>
+                            <div class="input-group input-group-sm justify-content-center">
+                                @using (Html.BeginForm("Decrease", "Cart_65134070", new { id = item.MaGH }, FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-secondary">−</button>
+                                }
+                                <span class="input-group-text bg-white fw-bold px-3">@item.SoLuong</span>
+                                @using (Html.BeginForm("Increase", "Cart_65134070", new { id = item.MaGH }, FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-secondary">+</button>
+                                }
+                            </div>
+                        </td>
+                        <td class="text-danger fw-bold">
+                            @String.Format("{0:N0} đ", item.SoLuong * (item.San_Pham.Gia ?? 0))
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("Remove", "Cart_65134070", new { id = item.MaGH }, FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Xóa sản phẩm này?')">
+                                    <i class="bi bi-trash"></i> Xóa
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4 p-3 bg-light rounded border">
+        <h5 class="mb-3">➕ Thêm sản phẩm khác</h5>
+        <form method="post" action="@Url.Action("Add", "Cart_65134070")" class="row g-3 align-items-end">
+            @Html.AntiForgeryToken()
+            <div class="col-md-8">
+                <select name="id" class="form-select" required>
+                    <option value="">-- Chọn sản phẩm để thêm nhanh --</option>
+                    @if (ViewBag.DanhSachSanPham != null)
+                    {
+                        foreach (var sp in ViewBag.DanhSachSanPham as List<webbanhangadidas_65134070.Models.San_Pham>)
+                        {
+                            <option value="@sp.MaSP">@sp.TenSP - @String.Format("{0:N0} đ", sp.Gia)</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-dark w-100">Thêm vào giỏ</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-7">
+            <div class="card shadow-sm border-primary">
+                <div class="card-header bg-primary text-white fw-bold">
+                    <i class="bi bi-truck me-2"></i> THÔNG TIN NHẬN HÀNG
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Checkout", "Order_65134070", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Số điện thoại liên hệ <span class="text-danger">*</span></label>
+                            <input type="tel" name="ghiChu" class="form-control" placeholder="Ví dụ: 0987654321" required maxlength="11" pattern="[0-9]{10,11}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Địa chỉ giao hàng chi tiết <span class="text-danger">*</span></label>
+                            <textarea name="diaChiGiao" class="form-control" rows="3" placeholder="Số nhà, tên đường, phường/xã..." required maxlength="255"></textarea>
+                        </div>
+
+                        <hr />
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-0">Tổng tiền thanh toán:</h5>
+                                <span class="fs-4 text-danger fw-bold">@String.Format("{0:N0} đ", ViewBag.TongTien)</span>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg px-5 shadow">
+                                <i class="bi bi-cart-check me-2"></i> ĐẶT HÀNG NGAY
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="alert alert-warning border-warning shadow-sm">
+                <h6 class="fw-bold"><i class="bi bi-info-circle me-2"></i>Lưu ý:</h6>
+                <ul class="mb-0 small">
+                    <li>Vui lòng kiểm tra kỹ số điện thoại để shipper liên lạc.</li>
+                    <li>Đơn hàng sẽ được chuyển sang trạng thái <strong>"Chờ duyệt"</strong>.</li>
+                    <li>Bạn có thể xem lại lịch sử đặt hàng trong phần cá nhân.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}

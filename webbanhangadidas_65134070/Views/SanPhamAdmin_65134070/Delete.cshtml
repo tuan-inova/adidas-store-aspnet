@@ -1,0 +1,93 @@
+﻿@model webbanhangadidas_65134070.Models.San_Pham
+
+@{
+    ViewBag.Title = "Xác nhận xóa sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="fw-bold text-danger mb-4">
+    🗑️ XÁC NHẬN XỬ LÝ SẢN PHẨM
+</h2>
+
+<div class="alert alert-warning">
+    ⚠️ <strong>Lưu ý:</strong>
+    - <b>Ngừng bán</b>: Sản phẩm không hiển thị cho user nhưng vẫn còn dữ liệu
+    - <b>Khôi phục</b>: Bán lại sản phẩm
+    - <b>Xóa vĩnh viễn</b>: Không thể khôi phục
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img src="~/Images/@Model.HinhAnh"
+                     class="img-thumbnail"
+                     style="max-width:200px" />
+            </div>
+
+            <div class="col-md-8">
+                <p><b>Tên sản phẩm:</b> @Model.TenSP</p>
+                <p><b>Mô tả:</b> @Model.MoTa</p>
+                <p>
+                    <b>Giá:</b>
+                    <span class="text-danger fw-bold">
+                        @String.Format("{0:N0} đ", Model.Gia)
+                    </span>
+                </p>
+                <p><b>Tồn kho:</b> @Model.SoLuongTon</p>
+                <p><b>Loại:</b> @Model.Loai_San_Pham.TenLoai</p>
+
+                <p>
+                    <b>Trạng thái:</b>
+                    @if (Model.TrangThai == true)
+                    {
+                        <span class="badge bg-success">Đang bán</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Ngừng bán</span>
+                    }
+                </p>
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- FORM NGỪNG BÁN / KHÔI PHỤC -->
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="d-flex gap-2">
+
+                @if (Model.TrangThai == true)
+                {
+                    <button type="submit"
+                            class="btn btn-warning">
+                        🚫 Ngừng bán
+                    </button>
+                }
+                else
+                {
+                    <button type="submit" formaction="@Url.Action("Restore", new { id = Model.MaSP })"
+                            class="btn btn-success">
+                        ♻️ Khôi phục
+                    </button>
+                }
+
+                <button type="submit" formaction="@Url.Action("DeletePermanent", new { id = Model.MaSP })"
+                        class="btn btn-danger"
+                        onclick="return confirm('⚠️ XÓA VĨNH VIỄN – KHÔNG THỂ KHÔI PHỤC. Bạn chắc chứ?')">
+                    ❌ Xóa vĩnh viễn
+                </button>
+
+                <a href="@Url.Action("Index")"
+                   class="btn btn-secondary">
+                    ⬅ Quay lại
+                </a>
+            </div>
+        }
+    </div>
+</div>
+

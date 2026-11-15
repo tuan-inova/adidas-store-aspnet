@@ -1,0 +1,41 @@
+﻿@model IEnumerable<webbanhangadidas_65134070.Models.San_Pham>
+
+@{
+    ViewBag.Title = ViewBag.TenLoai;
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+
+
+<h3 class="mb-4">@ViewBag.TenLoai</h3>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+
+                <a href="@Url.Action("Details", "Home", new { id = item.MaSP })"
+                   class="text-decoration-none text-dark">
+
+                    <img src="~/Images/@item.HinhAnh"
+                         class="card-img-top"
+                         style="height:200px; object-fit:cover" />
+
+                    <div class="card-body text-center">
+                        <h6>@item.TenSP</h6>
+
+                        <p class="text-danger fw-bold">
+                            @String.Format("{0:N0} đ", item.Gia)
+                        </p>
+                    </div>
+
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<a href="/" class="btn btn-secondary mt-3">
+    ← Quay lại trang chủ
+</a>

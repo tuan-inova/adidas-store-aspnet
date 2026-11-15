@@ -1,0 +1,84 @@
+﻿@model webbanhangadidas_65134070.Models.San_Pham
+
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>San_Pham</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TenSP)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TenSP)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MoTa)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MoTa)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Gia)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Gia)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SoLuongTon)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SoLuongTon)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.HinhAnh)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.HinhAnh)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TrangThai)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TrangThai)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Loai_San_Pham.TenLoai)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Loai_San_Pham.TenLoai)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.MaSP }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<webbanhangadidas_65134070.Models.Tai_Khoan>
+@{
+    ViewBag.Title = "Quản lý khách hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="fw-bold mb-4">👥 QUẢN LÝ KHÁCH HÀNG</h2>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Mã TK</th>
+                    <th>Họ Tên</th>
+                    <th>Email</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaTK</td>
+                        <td class="fw-bold">@item.HoTen</td>
+                        <td>@item.Email</td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
